@@ -1,0 +1,9 @@
+vpcname = "devops"
+cidr = "19.10.0.0/16"
+azs = [ "eu-west-1a","eu-west-1b" ]
+private_subnets = [ "19.10.1.0/24" , "19.10.2.0/24"]
+public_subnets =  [ "19.10.3.0/24", "19.10.4.0/24" ]
+ingress = [ 8080 ]
+enable_nat = false
+instancename = "jenkins_server"
+instancetype = "t2.medium"
