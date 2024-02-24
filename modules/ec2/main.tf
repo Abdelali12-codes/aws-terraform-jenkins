@@ -4,6 +4,9 @@ resource "aws_instance" "this" {
   instance_type = var.instancetype
   subnet_id = var.subnetid
   user_data = var.userdata
+  metadata_options {
+    http_tokens = "required"
+  }
   tags = {
     "Name": var.instancename
   }
