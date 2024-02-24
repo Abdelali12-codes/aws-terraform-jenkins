@@ -44,3 +44,7 @@ variable "instancename" {
 variable "instancetype" {
    type = string
 }
+
+variable "secretname" {
+  type =  string
+}

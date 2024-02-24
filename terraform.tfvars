@@ -7,3 +7,4 @@ ingress = [ 8080 ]
 enable_nat = false
 instancename = "jenkins_server"
 instancetype = "t2.medium"
+secretname = "sonarqube_db_secret"
