@@ -1,18 +1,6 @@
 #!/bin/bash 
 
 sudo apt update
-sudo apt upgrade
-
-### install postgress ###
-
-sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-
-wget -qO- https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo tee /etc/apt/trusted.gpg.d/pgdg.asc &>/dev/null
-
-sudo apt update
-sudo apt-get -y install postgresql postgresql-contrib
-sudo systemctl enable postgresql
-
 
 #### install java ###
 
@@ -38,7 +26,7 @@ echo 'sonarqube   -   nproc    4096' | sudo tee -a /etc/security/limits.conf
 
 # Append sysctl.conf configuration
 echo 'vm.max_map_count = 262144' | sudo tee -a /etc/sysctl.conf
-
+sudo sysctl --system
 
 sudo wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.9.0.65466.zip
 sudo apt install unzip -y
@@ -54,7 +42,7 @@ sonar.web.host=0.0.0.0
 sonar.web.port=9000
 sonar.jdbc.username=${db_username}
 sonar.jdbc.password=${db_password}
-sonar.jdbc.url=jdbc:postgresql://${db_host}:5432/sonarqube
+sonar.jdbc.url=jdbc:postgresql://${db_host}/sonarqube
 EOF
 )
 
@@ -62,7 +50,7 @@ EOF
 echo "$sonar_properties_content" | sudo tee /opt/sonarqube/conf/sonar.properties > /dev/null
 
 
-#!/bin/bash
+
 
 # Define the content to be added to sonar.service
 sonar_service_content=$(cat <<EOF
@@ -98,8 +86,4 @@ sudo systemctl daemon-reload
 sudo systemctl start sonar
 sudo systemctl enable sonar
 
-# Check the status of the SonarQube service
-sudo systemctl status sonar
 
-# Tail the SonarQube log file for monitoring
-sudo tail -f /opt/sonarqube/logs/sonar.log

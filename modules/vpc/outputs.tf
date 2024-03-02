@@ -23,3 +23,4 @@ output "private_routetable_id" {
   description = "private routetable"
   value = aws_route_table.private.id
 }
+

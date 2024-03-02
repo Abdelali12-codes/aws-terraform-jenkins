@@ -4,6 +4,10 @@ resource "aws_instance" "this" {
   instance_type = var.instancetype
   subnet_id = var.subnetid
   user_data = var.userdata
+  root_block_device{
+    volume_size=20
+    volume_type="gp2"
+  }
   metadata_options {
     http_tokens = "required"
   }
